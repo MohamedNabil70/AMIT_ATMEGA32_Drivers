@@ -1,0 +1,627 @@
+
+TMR_timer1_test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000438  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000004ac  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000019  00800060  00800060  000004ac  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000004ac  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000004dc  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000148  00000000  00000000  00000518  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000d05  00000000  00000000  00000660  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000075f  00000000  00000000  00001365  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000091f  00000000  00000000  00001ac4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  0000037c  00000000  00000000  000023e4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000068b  00000000  00000000  00002760  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000856  00000000  00000000  00002deb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000118  00000000  00000000  00003641  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 cc 01 	jmp	0x398	; 0x398 <__vector_6>
+  1c:	0c 94 94 01 	jmp	0x328	; 0x328 <__vector_7>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 5a 01 	jmp	0x2b4	; 0x2b4 <__vector_9>
+  28:	0c 94 fd 00 	jmp	0x1fa	; 0x1fa <__vector_10>
+  2c:	0c 94 c2 00 	jmp	0x184	; 0x184 <__vector_11>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a9 37       	cpi	r26, 0x79	; 121
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 b4 00 	call	0x168	; 0x168 <main>
+  74:	0c 94 1a 02 	jmp	0x434	; 0x434 <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <DIO_setPinDirection>:
+
+
+/*Pin Apis*/
+void DIO_setPinDirection(u8 PortId,u8 PinId,u8 PinDirection)
+{
+if((PortId<=3)&&(PinId<=7)&&((PinDirection== DIO_PIN_INPUT)||(PinDirection==DIO_PIN_OUTPUT)))
+  7c:	84 30       	cpi	r24, 0x04	; 4
+  7e:	08 f0       	brcs	.+2      	; 0x82 <DIO_setPinDirection+0x6>
+  80:	72 c0       	rjmp	.+228    	; 0x166 <DIO_setPinDirection+0xea>
+  82:	68 30       	cpi	r22, 0x08	; 8
+  84:	08 f0       	brcs	.+2      	; 0x88 <DIO_setPinDirection+0xc>
+  86:	6f c0       	rjmp	.+222    	; 0x166 <DIO_setPinDirection+0xea>
+  88:	42 30       	cpi	r20, 0x02	; 2
+  8a:	08 f0       	brcs	.+2      	; 0x8e <DIO_setPinDirection+0x12>
+  8c:	6c c0       	rjmp	.+216    	; 0x166 <DIO_setPinDirection+0xea>
+{
+switch(PortId)
+  8e:	81 30       	cpi	r24, 0x01	; 1
+  90:	01 f1       	breq	.+64     	; 0xd2 <DIO_setPinDirection+0x56>
+  92:	30 f0       	brcs	.+12     	; 0xa0 <DIO_setPinDirection+0x24>
+  94:	82 30       	cpi	r24, 0x02	; 2
+  96:	b1 f1       	breq	.+108    	; 0x104 <DIO_setPinDirection+0x88>
+  98:	83 30       	cpi	r24, 0x03	; 3
+  9a:	09 f4       	brne	.+2      	; 0x9e <DIO_setPinDirection+0x22>
+  9c:	4c c0       	rjmp	.+152    	; 0x136 <DIO_setPinDirection+0xba>
+  9e:	08 95       	ret
+{
+	case DIO_PORTA:
+	if(1==PinDirection)
+  a0:	41 30       	cpi	r20, 0x01	; 1
+  a2:	59 f4       	brne	.+22     	; 0xba <DIO_setPinDirection+0x3e>
+	{
+	SET_BIT(DDRA,PinId);	
+  a4:	2a b3       	in	r18, 0x1a	; 26
+  a6:	81 e0       	ldi	r24, 0x01	; 1
+  a8:	90 e0       	ldi	r25, 0x00	; 0
+  aa:	02 c0       	rjmp	.+4      	; 0xb0 <DIO_setPinDirection+0x34>
+  ac:	88 0f       	add	r24, r24
+  ae:	99 1f       	adc	r25, r25
+  b0:	6a 95       	dec	r22
+  b2:	e2 f7       	brpl	.-8      	; 0xac <DIO_setPinDirection+0x30>
+  b4:	82 2b       	or	r24, r18
+  b6:	8a bb       	out	0x1a, r24	; 26
+  b8:	08 95       	ret
+	}else{
+	CLR_BIT(DDRA,PinId);	
+  ba:	2a b3       	in	r18, 0x1a	; 26
+  bc:	81 e0       	ldi	r24, 0x01	; 1
+  be:	90 e0       	ldi	r25, 0x00	; 0
+  c0:	02 c0       	rjmp	.+4      	; 0xc6 <DIO_setPinDirection+0x4a>
+  c2:	88 0f       	add	r24, r24
+  c4:	99 1f       	adc	r25, r25
+  c6:	6a 95       	dec	r22
+  c8:	e2 f7       	brpl	.-8      	; 0xc2 <DIO_setPinDirection+0x46>
+  ca:	80 95       	com	r24
+  cc:	82 23       	and	r24, r18
+  ce:	8a bb       	out	0x1a, r24	; 26
+  d0:	08 95       	ret
+	}
+	break;
+	
+	case DIO_PORTB:
+		if(1==PinDirection)
+  d2:	41 30       	cpi	r20, 0x01	; 1
+  d4:	59 f4       	brne	.+22     	; 0xec <DIO_setPinDirection+0x70>
+	{
+	SET_BIT(DDRB,PinId);	
+  d6:	27 b3       	in	r18, 0x17	; 23
+  d8:	81 e0       	ldi	r24, 0x01	; 1
+  da:	90 e0       	ldi	r25, 0x00	; 0
+  dc:	02 c0       	rjmp	.+4      	; 0xe2 <DIO_setPinDirection+0x66>
+  de:	88 0f       	add	r24, r24
+  e0:	99 1f       	adc	r25, r25
+  e2:	6a 95       	dec	r22
+  e4:	e2 f7       	brpl	.-8      	; 0xde <DIO_setPinDirection+0x62>
+  e6:	82 2b       	or	r24, r18
+  e8:	87 bb       	out	0x17, r24	; 23
+  ea:	08 95       	ret
+	}else{
+	CLR_BIT(DDRB,PinId);	
+  ec:	27 b3       	in	r18, 0x17	; 23
+  ee:	81 e0       	ldi	r24, 0x01	; 1
+  f0:	90 e0       	ldi	r25, 0x00	; 0
+  f2:	02 c0       	rjmp	.+4      	; 0xf8 <DIO_setPinDirection+0x7c>
+  f4:	88 0f       	add	r24, r24
+  f6:	99 1f       	adc	r25, r25
+  f8:	6a 95       	dec	r22
+  fa:	e2 f7       	brpl	.-8      	; 0xf4 <DIO_setPinDirection+0x78>
+  fc:	80 95       	com	r24
+  fe:	82 23       	and	r24, r18
+ 100:	87 bb       	out	0x17, r24	; 23
+ 102:	08 95       	ret
+	}
+	break;
+		
+	case DIO_PORTC:
+			if(1==PinDirection)
+ 104:	41 30       	cpi	r20, 0x01	; 1
+ 106:	59 f4       	brne	.+22     	; 0x11e <DIO_setPinDirection+0xa2>
+	{
+	SET_BIT(DDRC,PinId);	
+ 108:	24 b3       	in	r18, 0x14	; 20
+ 10a:	81 e0       	ldi	r24, 0x01	; 1
+ 10c:	90 e0       	ldi	r25, 0x00	; 0
+ 10e:	02 c0       	rjmp	.+4      	; 0x114 <DIO_setPinDirection+0x98>
+ 110:	88 0f       	add	r24, r24
+ 112:	99 1f       	adc	r25, r25
+ 114:	6a 95       	dec	r22
+ 116:	e2 f7       	brpl	.-8      	; 0x110 <DIO_setPinDirection+0x94>
+ 118:	82 2b       	or	r24, r18
+ 11a:	84 bb       	out	0x14, r24	; 20
+ 11c:	08 95       	ret
+	}else{
+	CLR_BIT(DDRC,PinId);	
+ 11e:	24 b3       	in	r18, 0x14	; 20
+ 120:	81 e0       	ldi	r24, 0x01	; 1
+ 122:	90 e0       	ldi	r25, 0x00	; 0
+ 124:	02 c0       	rjmp	.+4      	; 0x12a <DIO_setPinDirection+0xae>
+ 126:	88 0f       	add	r24, r24
+ 128:	99 1f       	adc	r25, r25
+ 12a:	6a 95       	dec	r22
+ 12c:	e2 f7       	brpl	.-8      	; 0x126 <DIO_setPinDirection+0xaa>
+ 12e:	80 95       	com	r24
+ 130:	82 23       	and	r24, r18
+ 132:	84 bb       	out	0x14, r24	; 20
+ 134:	08 95       	ret
+	}
+	break;	
+	
+	case DIO_PORTD:
+			if(1==PinDirection)
+ 136:	41 30       	cpi	r20, 0x01	; 1
+ 138:	59 f4       	brne	.+22     	; 0x150 <DIO_setPinDirection+0xd4>
+	{
+	SET_BIT(DDRD,PinId);	
+ 13a:	21 b3       	in	r18, 0x11	; 17
+ 13c:	81 e0       	ldi	r24, 0x01	; 1
+ 13e:	90 e0       	ldi	r25, 0x00	; 0
+ 140:	02 c0       	rjmp	.+4      	; 0x146 <DIO_setPinDirection+0xca>
+ 142:	88 0f       	add	r24, r24
+ 144:	99 1f       	adc	r25, r25
+ 146:	6a 95       	dec	r22
+ 148:	e2 f7       	brpl	.-8      	; 0x142 <DIO_setPinDirection+0xc6>
+ 14a:	82 2b       	or	r24, r18
+ 14c:	81 bb       	out	0x11, r24	; 17
+ 14e:	08 95       	ret
+	}else{
+	CLR_BIT(DDRD,PinId);	
+ 150:	21 b3       	in	r18, 0x11	; 17
+ 152:	81 e0       	ldi	r24, 0x01	; 1
+ 154:	90 e0       	ldi	r25, 0x00	; 0
+ 156:	02 c0       	rjmp	.+4      	; 0x15c <DIO_setPinDirection+0xe0>
+ 158:	88 0f       	add	r24, r24
+ 15a:	99 1f       	adc	r25, r25
+ 15c:	6a 95       	dec	r22
+ 15e:	e2 f7       	brpl	.-8      	; 0x158 <DIO_setPinDirection+0xdc>
+ 160:	80 95       	com	r24
+ 162:	82 23       	and	r24, r18
+ 164:	81 bb       	out	0x11, r24	; 17
+ 166:	08 95       	ret
+
+00000168 <main>:
+		#include "TMR_config.h"
+		#include "DIO_interface.h"
+
+int main(void)
+{
+DIO_setPinDirection(DIO_PORTD,DIO_PIN5,DIO_PIN_OUTPUT);
+ 168:	41 e0       	ldi	r20, 0x01	; 1
+ 16a:	65 e0       	ldi	r22, 0x05	; 5
+ 16c:	83 e0       	ldi	r24, 0x03	; 3
+ 16e:	0e 94 3e 00 	call	0x7c	; 0x7c <DIO_setPinDirection>
+s8 angle =-84;
+
+TMR_timer1init();
+ 172:	0e 94 36 01 	call	0x26c	; 0x26c <TMR_timer1init>
+
+TMR_timer1SetCompareMatchAValue(249+((25*(90+angle))/18));
+ 176:	81 e0       	ldi	r24, 0x01	; 1
+ 178:	91 e0       	ldi	r25, 0x01	; 1
+ 17a:	0e 94 57 01 	call	0x2ae	; 0x2ae <TMR_timer1SetCompareMatchAValue>
+
+TMR_timer1start();
+ 17e:	0e 94 4d 01 	call	0x29a	; 0x29a <TMR_timer1start>
+ 182:	ff cf       	rjmp	.-2      	; 0x182 <main+0x1a>
+
+00000184 <__vector_11>:
+
+void TMR_ICU_getDutyCycle(u8* dutyCycle)
+{
+	if (dutyCycle != NULL)
+	{
+*dutyCycle= (u8)((TMR_ICU_onPeriod*100)/(TMR_ICU_onPeriod + TMR_ICU_offPeriod));	
+ 184:	1f 92       	push	r1
+ 186:	0f 92       	push	r0
+ 188:	0f b6       	in	r0, 0x3f	; 63
+ 18a:	0f 92       	push	r0
+ 18c:	11 24       	eor	r1, r1
+ 18e:	2f 93       	push	r18
+ 190:	3f 93       	push	r19
+ 192:	4f 93       	push	r20
+ 194:	5f 93       	push	r21
+ 196:	6f 93       	push	r22
+ 198:	7f 93       	push	r23
+ 19a:	8f 93       	push	r24
+ 19c:	9f 93       	push	r25
+ 19e:	af 93       	push	r26
+ 1a0:	bf 93       	push	r27
+ 1a2:	ef 93       	push	r30
+ 1a4:	ff 93       	push	r31
+ 1a6:	80 91 6b 00 	lds	r24, 0x006B	; 0x80006b <counterOVF.1645>
+ 1aa:	90 91 6c 00 	lds	r25, 0x006C	; 0x80006c <counterOVF.1645+0x1>
+ 1ae:	01 96       	adiw	r24, 0x01	; 1
+ 1b0:	90 93 6c 00 	sts	0x006C, r25	; 0x80006c <counterOVF.1645+0x1>
+ 1b4:	80 93 6b 00 	sts	0x006B, r24	; 0x80006b <counterOVF.1645>
+ 1b8:	81 3d       	cpi	r24, 0xD1	; 209
+ 1ba:	93 40       	sbci	r25, 0x03	; 3
+ 1bc:	69 f4       	brne	.+26     	; 0x1d8 <__vector_11+0x54>
+ 1be:	80 e7       	ldi	r24, 0x70	; 112
+ 1c0:	82 bf       	out	0x32, r24	; 50
+ 1c2:	10 92 6c 00 	sts	0x006C, r1	; 0x80006c <counterOVF.1645+0x1>
+ 1c6:	10 92 6b 00 	sts	0x006B, r1	; 0x80006b <counterOVF.1645>
+ 1ca:	e0 91 77 00 	lds	r30, 0x0077	; 0x800077 <TMR_timer0_OVF_pCallBack>
+ 1ce:	f0 91 78 00 	lds	r31, 0x0078	; 0x800078 <TMR_timer0_OVF_pCallBack+0x1>
+ 1d2:	30 97       	sbiw	r30, 0x00	; 0
+ 1d4:	09 f0       	breq	.+2      	; 0x1d8 <__vector_11+0x54>
+ 1d6:	09 95       	icall
+ 1d8:	ff 91       	pop	r31
+ 1da:	ef 91       	pop	r30
+ 1dc:	bf 91       	pop	r27
+ 1de:	af 91       	pop	r26
+ 1e0:	9f 91       	pop	r25
+ 1e2:	8f 91       	pop	r24
+ 1e4:	7f 91       	pop	r23
+ 1e6:	6f 91       	pop	r22
+ 1e8:	5f 91       	pop	r21
+ 1ea:	4f 91       	pop	r20
+ 1ec:	3f 91       	pop	r19
+ 1ee:	2f 91       	pop	r18
+ 1f0:	0f 90       	pop	r0
+ 1f2:	0f be       	out	0x3f, r0	; 63
+ 1f4:	0f 90       	pop	r0
+ 1f6:	1f 90       	pop	r1
+ 1f8:	18 95       	reti
+
+000001fa <__vector_10>:
+ 1fa:	1f 92       	push	r1
+ 1fc:	0f 92       	push	r0
+ 1fe:	0f b6       	in	r0, 0x3f	; 63
+ 200:	0f 92       	push	r0
+ 202:	11 24       	eor	r1, r1
+ 204:	2f 93       	push	r18
+ 206:	3f 93       	push	r19
+ 208:	4f 93       	push	r20
+ 20a:	5f 93       	push	r21
+ 20c:	6f 93       	push	r22
+ 20e:	7f 93       	push	r23
+ 210:	8f 93       	push	r24
+ 212:	9f 93       	push	r25
+ 214:	af 93       	push	r26
+ 216:	bf 93       	push	r27
+ 218:	ef 93       	push	r30
+ 21a:	ff 93       	push	r31
+ 21c:	80 91 69 00 	lds	r24, 0x0069	; 0x800069 <counterCTC.1651>
+ 220:	90 91 6a 00 	lds	r25, 0x006A	; 0x80006a <counterCTC.1651+0x1>
+ 224:	01 96       	adiw	r24, 0x01	; 1
+ 226:	90 93 6a 00 	sts	0x006A, r25	; 0x80006a <counterCTC.1651+0x1>
+ 22a:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <counterCTC.1651>
+ 22e:	88 3e       	cpi	r24, 0xE8	; 232
+ 230:	93 40       	sbci	r25, 0x03	; 3
+ 232:	59 f4       	brne	.+22     	; 0x24a <__vector_10+0x50>
+ 234:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <counterCTC.1651+0x1>
+ 238:	10 92 69 00 	sts	0x0069, r1	; 0x800069 <counterCTC.1651>
+ 23c:	e0 91 75 00 	lds	r30, 0x0075	; 0x800075 <TMR_timer0_CTC_pCallBack>
+ 240:	f0 91 76 00 	lds	r31, 0x0076	; 0x800076 <TMR_timer0_CTC_pCallBack+0x1>
+ 244:	30 97       	sbiw	r30, 0x00	; 0
+ 246:	09 f0       	breq	.+2      	; 0x24a <__vector_10+0x50>
+ 248:	09 95       	icall
+ 24a:	ff 91       	pop	r31
+ 24c:	ef 91       	pop	r30
+ 24e:	bf 91       	pop	r27
+ 250:	af 91       	pop	r26
+ 252:	9f 91       	pop	r25
+ 254:	8f 91       	pop	r24
+ 256:	7f 91       	pop	r23
+ 258:	6f 91       	pop	r22
+ 25a:	5f 91       	pop	r21
+ 25c:	4f 91       	pop	r20
+ 25e:	3f 91       	pop	r19
+ 260:	2f 91       	pop	r18
+ 262:	0f 90       	pop	r0
+ 264:	0f be       	out	0x3f, r0	; 63
+ 266:	0f 90       	pop	r0
+ 268:	1f 90       	pop	r1
+ 26a:	18 95       	reti
+
+0000026c <TMR_timer1init>:
+ 26c:	8f b5       	in	r24, 0x2f	; 47
+ 26e:	8e 7f       	andi	r24, 0xFE	; 254
+ 270:	8f bd       	out	0x2f, r24	; 47
+ 272:	8f b5       	in	r24, 0x2f	; 47
+ 274:	82 60       	ori	r24, 0x02	; 2
+ 276:	8f bd       	out	0x2f, r24	; 47
+ 278:	8e b5       	in	r24, 0x2e	; 46
+ 27a:	88 60       	ori	r24, 0x08	; 8
+ 27c:	8e bd       	out	0x2e, r24	; 46
+ 27e:	8e b5       	in	r24, 0x2e	; 46
+ 280:	80 61       	ori	r24, 0x10	; 16
+ 282:	8e bd       	out	0x2e, r24	; 46
+ 284:	8f b5       	in	r24, 0x2f	; 47
+ 286:	8f 7b       	andi	r24, 0xBF	; 191
+ 288:	8f bd       	out	0x2f, r24	; 47
+ 28a:	8f b5       	in	r24, 0x2f	; 47
+ 28c:	80 68       	ori	r24, 0x80	; 128
+ 28e:	8f bd       	out	0x2f, r24	; 47
+ 290:	87 e8       	ldi	r24, 0x87	; 135
+ 292:	93 e1       	ldi	r25, 0x13	; 19
+ 294:	97 bd       	out	0x27, r25	; 39
+ 296:	86 bd       	out	0x26, r24	; 38
+ 298:	08 95       	ret
+
+0000029a <TMR_timer1start>:
+ 29a:	8e b5       	in	r24, 0x2e	; 46
+ 29c:	81 60       	ori	r24, 0x01	; 1
+ 29e:	8e bd       	out	0x2e, r24	; 46
+ 2a0:	8e b5       	in	r24, 0x2e	; 46
+ 2a2:	82 60       	ori	r24, 0x02	; 2
+ 2a4:	8e bd       	out	0x2e, r24	; 46
+ 2a6:	8e b5       	in	r24, 0x2e	; 46
+ 2a8:	8b 7f       	andi	r24, 0xFB	; 251
+ 2aa:	8e bd       	out	0x2e, r24	; 46
+ 2ac:	08 95       	ret
+
+000002ae <TMR_timer1SetCompareMatchAValue>:
+ 2ae:	9b bd       	out	0x2b, r25	; 43
+ 2b0:	8a bd       	out	0x2a, r24	; 42
+ 2b2:	08 95       	ret
+
+000002b4 <__vector_9>:
+ 2b4:	1f 92       	push	r1
+ 2b6:	0f 92       	push	r0
+ 2b8:	0f b6       	in	r0, 0x3f	; 63
+ 2ba:	0f 92       	push	r0
+ 2bc:	11 24       	eor	r1, r1
+ 2be:	2f 93       	push	r18
+ 2c0:	3f 93       	push	r19
+ 2c2:	4f 93       	push	r20
+ 2c4:	5f 93       	push	r21
+ 2c6:	6f 93       	push	r22
+ 2c8:	7f 93       	push	r23
+ 2ca:	8f 93       	push	r24
+ 2cc:	9f 93       	push	r25
+ 2ce:	af 93       	push	r26
+ 2d0:	bf 93       	push	r27
+ 2d2:	ef 93       	push	r30
+ 2d4:	ff 93       	push	r31
+ 2d6:	80 91 67 00 	lds	r24, 0x0067	; 0x800067 <counterOVF.1680>
+ 2da:	90 91 68 00 	lds	r25, 0x0068	; 0x800068 <counterOVF.1680+0x1>
+ 2de:	01 96       	adiw	r24, 0x01	; 1
+ 2e0:	90 93 68 00 	sts	0x0068, r25	; 0x800068 <counterOVF.1680+0x1>
+ 2e4:	80 93 67 00 	sts	0x0067, r24	; 0x800067 <counterOVF.1680>
+ 2e8:	04 97       	sbiw	r24, 0x04	; 4
+ 2ea:	69 f4       	brne	.+26     	; 0x306 <__vector_9+0x52>
+ 2ec:	80 e7       	ldi	r24, 0x70	; 112
+ 2ee:	82 bf       	out	0x32, r24	; 50
+ 2f0:	10 92 68 00 	sts	0x0068, r1	; 0x800068 <counterOVF.1680+0x1>
+ 2f4:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <counterOVF.1680>
+ 2f8:	e0 91 73 00 	lds	r30, 0x0073	; 0x800073 <TMR_timer1_OVF_pCallBack>
+ 2fc:	f0 91 74 00 	lds	r31, 0x0074	; 0x800074 <TMR_timer1_OVF_pCallBack+0x1>
+ 300:	30 97       	sbiw	r30, 0x00	; 0
+ 302:	09 f0       	breq	.+2      	; 0x306 <__vector_9+0x52>
+ 304:	09 95       	icall
+ 306:	ff 91       	pop	r31
+ 308:	ef 91       	pop	r30
+ 30a:	bf 91       	pop	r27
+ 30c:	af 91       	pop	r26
+ 30e:	9f 91       	pop	r25
+ 310:	8f 91       	pop	r24
+ 312:	7f 91       	pop	r23
+ 314:	6f 91       	pop	r22
+ 316:	5f 91       	pop	r21
+ 318:	4f 91       	pop	r20
+ 31a:	3f 91       	pop	r19
+ 31c:	2f 91       	pop	r18
+ 31e:	0f 90       	pop	r0
+ 320:	0f be       	out	0x3f, r0	; 63
+ 322:	0f 90       	pop	r0
+ 324:	1f 90       	pop	r1
+ 326:	18 95       	reti
+
+00000328 <__vector_7>:
+ 328:	1f 92       	push	r1
+ 32a:	0f 92       	push	r0
+ 32c:	0f b6       	in	r0, 0x3f	; 63
+ 32e:	0f 92       	push	r0
+ 330:	11 24       	eor	r1, r1
+ 332:	2f 93       	push	r18
+ 334:	3f 93       	push	r19
+ 336:	4f 93       	push	r20
+ 338:	5f 93       	push	r21
+ 33a:	6f 93       	push	r22
+ 33c:	7f 93       	push	r23
+ 33e:	8f 93       	push	r24
+ 340:	9f 93       	push	r25
+ 342:	af 93       	push	r26
+ 344:	bf 93       	push	r27
+ 346:	ef 93       	push	r30
+ 348:	ff 93       	push	r31
+ 34a:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <counterCTC.1686>
+ 34e:	90 91 66 00 	lds	r25, 0x0066	; 0x800066 <counterCTC.1686+0x1>
+ 352:	01 96       	adiw	r24, 0x01	; 1
+ 354:	90 93 66 00 	sts	0x0066, r25	; 0x800066 <counterCTC.1686+0x1>
+ 358:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <counterCTC.1686>
+ 35c:	0a 97       	sbiw	r24, 0x0a	; 10
+ 35e:	59 f4       	brne	.+22     	; 0x376 <__vector_7+0x4e>
+ 360:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <counterCTC.1686+0x1>
+ 364:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <counterCTC.1686>
+ 368:	e0 91 71 00 	lds	r30, 0x0071	; 0x800071 <TMR_timer1_CTC_pCallBack>
+ 36c:	f0 91 72 00 	lds	r31, 0x0072	; 0x800072 <TMR_timer1_CTC_pCallBack+0x1>
+ 370:	30 97       	sbiw	r30, 0x00	; 0
+ 372:	09 f0       	breq	.+2      	; 0x376 <__vector_7+0x4e>
+ 374:	09 95       	icall
+ 376:	ff 91       	pop	r31
+ 378:	ef 91       	pop	r30
+ 37a:	bf 91       	pop	r27
+ 37c:	af 91       	pop	r26
+ 37e:	9f 91       	pop	r25
+ 380:	8f 91       	pop	r24
+ 382:	7f 91       	pop	r23
+ 384:	6f 91       	pop	r22
+ 386:	5f 91       	pop	r21
+ 388:	4f 91       	pop	r20
+ 38a:	3f 91       	pop	r19
+ 38c:	2f 91       	pop	r18
+ 38e:	0f 90       	pop	r0
+ 390:	0f be       	out	0x3f, r0	; 63
+ 392:	0f 90       	pop	r0
+ 394:	1f 90       	pop	r1
+ 396:	18 95       	reti
+
+00000398 <__vector_6>:
+}
+
+/// ISR Function protoType for TMR1 ICU
+void __vector_6(void) __attribute__ ((signal));
+void __vector_6(void)
+{
+ 398:	1f 92       	push	r1
+ 39a:	0f 92       	push	r0
+ 39c:	0f b6       	in	r0, 0x3f	; 63
+ 39e:	0f 92       	push	r0
+ 3a0:	11 24       	eor	r1, r1
+ 3a2:	2f 93       	push	r18
+ 3a4:	3f 93       	push	r19
+ 3a6:	8f 93       	push	r24
+ 3a8:	9f 93       	push	r25
+	static u8  flag = TMR_ICU_STARTING_EDGE;
+	static u16 oldValue = 0;
+	static u16 CounterValue;
+	
+	/* Read ICR1 value*/
+	CounterValue = ICR1_u16;
+ 3aa:	86 b5       	in	r24, 0x26	; 38
+ 3ac:	97 b5       	in	r25, 0x27	; 39
+ 3ae:	90 93 64 00 	sts	0x0064, r25	; 0x800064 <CounterValue.1703+0x1>
+ 3b2:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <CounterValue.1703>
+	
+	if (flag == TMR_ICU_RISING_EDGE) //calculate off period
+ 3b6:	20 91 62 00 	lds	r18, 0x0062	; 0x800062 <flag.1701>
+ 3ba:	21 30       	cpi	r18, 0x01	; 1
+ 3bc:	a1 f4       	brne	.+40     	; 0x3e6 <__vector_6+0x4e>
+	{
+		TMR_ICU_offPeriod = (CounterValue - oldValue)*4;
+ 3be:	20 91 60 00 	lds	r18, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3c2:	30 91 61 00 	lds	r19, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3c6:	82 1b       	sub	r24, r18
+ 3c8:	93 0b       	sbc	r25, r19
+ 3ca:	88 0f       	add	r24, r24
+ 3cc:	99 1f       	adc	r25, r25
+ 3ce:	88 0f       	add	r24, r24
+ 3d0:	99 1f       	adc	r25, r25
+ 3d2:	90 93 6e 00 	sts	0x006E, r25	; 0x80006e <TMR_ICU_offPeriod+0x1>
+ 3d6:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <TMR_ICU_offPeriod>
+		// change edge source of ICP1 interrupt to falling edge
+		CLR_BIT(TCCR1B,6);
+ 3da:	8e b5       	in	r24, 0x2e	; 46
+ 3dc:	8f 7b       	andi	r24, 0xBF	; 191
+ 3de:	8e bd       	out	0x2e, r24	; 46
+		// change flag value
+		flag = TMR_ICU_FALLING_EDGE;
+ 3e0:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <flag.1701>
+ 3e4:	16 c0       	rjmp	.+44     	; 0x412 <__EEPROM_REGION_LENGTH__+0x12>
+	}
+	else if (flag == TMR_ICU_FALLING_EDGE) //calculate on period
+ 3e6:	21 11       	cpse	r18, r1
+ 3e8:	14 c0       	rjmp	.+40     	; 0x412 <__EEPROM_REGION_LENGTH__+0x12>
+	{
+		TMR_ICU_onPeriod = (CounterValue - oldValue)*4;
+ 3ea:	20 91 60 00 	lds	r18, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3ee:	30 91 61 00 	lds	r19, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3f2:	82 1b       	sub	r24, r18
+ 3f4:	93 0b       	sbc	r25, r19
+ 3f6:	88 0f       	add	r24, r24
+ 3f8:	99 1f       	adc	r25, r25
+ 3fa:	88 0f       	add	r24, r24
+ 3fc:	99 1f       	adc	r25, r25
+ 3fe:	90 93 70 00 	sts	0x0070, r25	; 0x800070 <TMR_ICU_onPeriod+0x1>
+ 402:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <TMR_ICU_onPeriod>
+		// change edge source of ICP1 interrupt to rising edge
+		SET_BIT(TCCR1B,6);
+ 406:	8e b5       	in	r24, 0x2e	; 46
+ 408:	80 64       	ori	r24, 0x40	; 64
+ 40a:	8e bd       	out	0x2e, r24	; 46
+		// change flag value
+		flag = TMR_ICU_RISING_EDGE;
+ 40c:	81 e0       	ldi	r24, 0x01	; 1
+ 40e:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <flag.1701>
+	}
+	// Old value update
+	oldValue = CounterValue;
+ 412:	80 91 63 00 	lds	r24, 0x0063	; 0x800063 <CounterValue.1703>
+ 416:	90 91 64 00 	lds	r25, 0x0064	; 0x800064 <CounterValue.1703+0x1>
+ 41a:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 41e:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+
+
+}
+ 422:	9f 91       	pop	r25
+ 424:	8f 91       	pop	r24
+ 426:	3f 91       	pop	r19
+ 428:	2f 91       	pop	r18
+ 42a:	0f 90       	pop	r0
+ 42c:	0f be       	out	0x3f, r0	; 63
+ 42e:	0f 90       	pop	r0
+ 430:	1f 90       	pop	r1
+ 432:	18 95       	reti
+
+00000434 <_exit>:
+ 434:	f8 94       	cli
+
+00000436 <__stop_program>:
+ 436:	ff cf       	rjmp	.-2      	; 0x436 <__stop_program>

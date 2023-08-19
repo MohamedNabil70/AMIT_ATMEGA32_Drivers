@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1659873229 source:d:\study\self learning\amit\c projects\lab 3_3\function.c
+
+1660121505 source:d:\study\self learning\amit\c projects\lab 3_3\main.c
+	<stdio.h>
+	<stdlib.h>
+	"prototypes.h"
+	"suii.h"
+
+1659874632 source:d:\study\self learning\amit\c projects\lab 3_3\multiplication.c
+
+1660121190 d:\study\self learning\amit\c projects\lab 3_3\prototypes.h
+
+1660120947 d:\study\self learning\amit\c projects\ex_4\lol.h
+
+1660121480 d:\study\self learning\amit\c projects\lab 3_3\suii.h
+
